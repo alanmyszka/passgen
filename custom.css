@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wdth,wght@75..125,300..700&display=swap');
+.fredoka-font {
+    font-family: "Fredoka", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+.roboto-regular {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}             
+html {
+    position: relative;
+    min-height: 99%;
+    background-color: #242424;
+}
+body {
+    margin-bottom: 48px;
+    color: #f8f8f8;
+    background-color: #242424;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 48px;
+    line-height: 48px;
+    border-radius: 10px;
+    text-align: center;
+    color: #f8f8f8;
+}
+.container {
+    width: auto;
+    max-width: 980px;
+    padding: 0 15px;
+    font-size: 2rem;
+}
+input[type=number] {
+    -moz-appearance: textfield;
+}
+.custom-form-input{
+    border-radius: 15px;
+    border-style: solid;
+    border-color: #686868;
+    background-color: #242424;
+    color: #f8f8f8;
+    max-width: 350px;
+}
+.custom-form-button{
+    border-radius: 15px;
+    border-style: none;
+    width: 145px;
+    background-color: #383838;;
+}
+.custom-nav{
+    width: 1.5rem;
+    font-size: 1.5rem;
+}
