@@ -34,20 +34,20 @@
                 <form class="mb-5">
                     <div class="mb-4">
                         <label for="password" class="form-label mb-4">Hasło:</label><br>
-                        <input type="text" class="form-control-lg custom-form-input" placeholder='Kliknij "Generuj"' id="password" readonly  style="font-size: 2rem;">
+                        <input type="text" class="form-control-lg custom-form-input custom-font-input" placeholder='Kliknij "Generuj"' id="password" readonly>
                     </div>
                     <div class="mb-4">
                         <label for="passwordLength" class="form-label mb-4">Długość hasła:</label><br>
-                        <input type="number" class="form-control-lg me-3 custom-form-input" id="passwordLength" name="amountInput" min="4" max="24" value="8" readonly oninput="document.getElementById('passwordLengthRange').value = value" style="width: 5rem; font-size: 2rem;">
-                        <input type="range" class="form-range" name="amountRange" min="4" max="24" value="8" id="passwordLengthRange" oninput="document.getElementById('passwordLength').value=value" style="width: 15.3rem;"/>
+                        <input type="number" class="form-control-lg me-3 custom-form-input custom-font-input custom-width-input-number" id="passwordLength" name="amountInput" min="4" max="24" value="8" readonly oninput="document.getElementById('passwordLengthRange').value = value">
+                        <input type="range" class="form-range custom-width-input-range" name="amountRange" min="4" max="24" value="8" id="passwordLengthRange" oninput="document.getElementById('passwordLength').value=value"/>
                     </div>
                     <div class="mb-4 text-center">
                         <input type="checkbox" class="form-check-input" id="num">
                         <label class="form-check-label mb-3" for="num">Tylko cyfry</label>
                     </div>
                     <div class="mb-4 text-center">
-                        <button type="button" class="btn btn-secondary me-4 p-3 fs-2 custom-form-button" onclick="genPassword()">Generuj</button>
-                        <button type="button" class="btn btn-secondary ms-4 p-3 fs-2 custom-form-button" onclick="copyPassword()">Kopiuj</button>
+                        <button type="button" class="btn btn-secondary me-4 custom-form-button" onclick="genPassword()">Generuj</button>
+                        <button type="button" class="btn btn-secondary ms-4 custom-form-button" onclick="copyPassword()">Kopiuj</button>
                     </div>
                 </form>
             </div>

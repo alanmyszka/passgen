@@ -41,7 +41,7 @@ body {
 input[type=number] {
     -moz-appearance: textfield;
 }
-.custom-form-input{
+.custom-form-input {
     border-radius: 15px;
     border-style: solid;
     border-color: #686868;
@@ -49,13 +49,44 @@ input[type=number] {
     color: #f8f8f8;
     max-width: 350px;
 }
-.custom-form-button{
+.custom-width-input-number {
+    width: 5rem;
+}
+.custom-width-input-range {
+    width: 15.3rem;
+}
+.custom-font-input {
+    font-size: 2rem;
+}
+.custom-form-button {
     border-radius: 15px;
     border-style: none;
     width: 145px;
-    background-color: #383838;;
+    height: 80px;
+    background-color: #383838;
+    font-size: 2rem;
+    
 }
-.custom-nav{
+.custom-nav {
     width: 1.5rem;
     font-size: 1.5rem;
+}
+@media (width <= 900px) {
+    .container {
+        font-size: 1rem;
+    }
+    .custom-font-input {
+        font-size: 1rem;
+    }
+    .custom-width-input-number {
+        width: 3.5rem;
+    }
+    .custom-width-input-range {
+        width: 6.5rem;
+    }
+    .custom-form-button {
+        width: 65px;
+        height: 50px;
+        font-size: 0.7rem;
+    }
 }
