@@ -1,4 +1,3 @@
 # passgen
-Password generator + random numbers generator
-
+Password Generator
 Live: https://passgen.alanmyszka.pl
