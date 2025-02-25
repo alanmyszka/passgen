@@ -5,12 +5,12 @@
 {% block content %}
     <div class="bg-zinc-900 p-8 rounded-lg shadow-lg sm:w-full max-w-md">
 
-        <div id="result" class="mb-4 p-4 bg-zinc-700 rounded-md text-center text-white sm:text-2xl text-sm">
-            Twoje hasło pojawi się tutaj
+        <div id="result" class="mb-4 p-4 bg-zinc-700 rounded-md text-center text-white sm:text-2xl text-sm font-mono">
+            wygenerowane hasło
         </div>
         
         <div class="mb-4">
-            <label for="length" class="text-white font-bold block mb-2">Długość hasła:</label>
+            <label for="length" class="text-white font-bold block mb-2">długość hasła:</label>
             <div class="flex items-center space-x-4">
                 <input type="number" id="length" value="12" min="4" max="24" 
                        class="w-20 p-2 rounded-md bg-zinc-700 text-white border border-zinc-600 focus:border-indigo-400 focus:ring-1 focus:ring-indigo-400">
@@ -33,33 +33,33 @@
         </script>
 
         <fieldset class="mb-4">
-            <legend class="text-sm font-medium text-indigo-400">Uwzględnij:</legend>
+            <legend class="text-sm font-medium text-indigo-400">uwzględnij:</legend>
             <label class="flex items-center mt-2">
                 <input type="checkbox" id="lowercase" checked class="w-5 h-5 accent-indigo-600">
-                <span class="ml-2">Małe litery</span>
+                <span class="ml-2">małe litery</span>
             </label>
             <label class="flex items-center mt-2">
                 <input type="checkbox" id="uppercase" checked class="w-5 h-5 accent-indigo-600">
-                <span class="ml-2">Wielkie litery</span>
+                <span class="ml-2">wielkie litery</span>
             </label>
             <label class="flex items-center mt-2">
                 <input type="checkbox" id="numbers" checked class="w-5 h-5 accent-indigo-600">
-                <span class="ml-2">Cyfry</span>
+                <span class="ml-2">cyfry</span>
             </label>
             <label class="flex items-center mt-2">
                 <input type="checkbox" id="special" checked class="w-5 h-5 accent-indigo-600">
-                <span class="ml-2">Znaki specjalne</span>
+                <span class="ml-2">znaki specjalne</span>
             </label>            
         </fieldset>
 
         <div class="flex space-x-4">
             <button id="generate" 
                     class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg">
-                Wygeneruj hasło
+                generuj
             </button>
             <button id="copy" 
                     class="bg-zinc-700 hover:bg-zinc-600 text-white font-bold py-2 px-4 rounded-lg">
-                Kopiuj
+                kopiuj
             </button>
         </div>
 

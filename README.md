@@ -1,4 +1,4 @@
 # passgen
-Password Generator and Password Manager
+Password Generator
 
 Live: https://passgen.alanmyszka.pl

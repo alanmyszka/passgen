@@ -37,13 +37,13 @@ document.getElementById('generate').addEventListener('click', () => {
     if (!characters.length) {
         errorDiv.textContent = "Wybierz przynajmniej jeden typ znaków!";
         errorDiv.classList.add('text-red-500');
-        resultDiv.textContent = "Twoje hasło pojawi się tutaj";
+        resultDiv.textContent = "wygenerowane hasło";
         return;
     }
     if (length < password.length) {
         errorDiv.textContent = "Długość hasła musi być większa niż liczba wybranych typów!";
         errorDiv.classList.add('text-red-500');
-        resultDiv.textContent = "Twoje hasło pojawi się tutaj";
+        resultDiv.textContent = "wygenerowane hasło";
         return;
     }
 
@@ -81,7 +81,7 @@ async function copyPassword() {
     const errorDiv = document.getElementById("error");
     const password = resultDiv.textContent.trim();
 
-    if (!password || password === "Twoje hasło pojawi się tutaj") {
+    if (!password || password === "wygenerowane hasło") {
         errorDiv.textContent = "Brak hasła do skopiowania!";
         errorDiv.classList.add('text-red-500');
         return;

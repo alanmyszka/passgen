@@ -18,6 +18,10 @@ templates = Jinja2Templates(directory="templates")
 async def read_root(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
+@app.get("/password-manager", response_class=HTMLResponse)
+async def password_manager(request: Request):
+    return templates.TemplateResponse("password_manager.html", {"request": request})
+
 @app.get("/password-manager/login", response_class=HTMLResponse)
 async def password_manager(request: Request):
     return templates.TemplateResponse("pm_login.html", {"request": request})
