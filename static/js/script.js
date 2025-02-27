@@ -1,4 +1,15 @@
-// Character sets
+function showErrorPopup(message) {
+    const popup = document.getElementById('errorPopup');
+    const messageBox = document.getElementById('popupMessage');
+
+    messageBox.textContent = message;
+    popup.classList.remove('hidden');
+}
+
+document.getElementById('closePopup').addEventListener('click', function () {
+    document.getElementById('errorPopup').classList.add('hidden');
+});
+
 const lowercase = "abcdefghijklmnopqrstuvwxyz";
 const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const numbers = "0123456789";
@@ -10,9 +21,10 @@ document.getElementById('generate').addEventListener('click', () => {
     const useUppercase = document.getElementById('uppercase').checked;
     const useNumbers = document.getElementById('numbers').checked;
     const useSpecial = document.getElementById('special').checked;
+    const compatibility = document.getElementById('compatibility').checked;
 
     const resultDiv = document.getElementById('result');
-    const errorDiv = document.getElementById('error');
+    const infoDiv = document.getElementById('info');
 
     let characters = "";
     let password = [];
@@ -35,14 +47,12 @@ document.getElementById('generate').addEventListener('click', () => {
     }
 
     if (!characters.length) {
-        errorDiv.textContent = "Wybierz przynajmniej jeden typ znaków!";
-        errorDiv.classList.add('text-red-500');
+        showErrorPopup("Wybierz przynajmniej jeden typ znaków!");
         resultDiv.textContent = "wygenerowane hasło";
         return;
     }
     if (length < password.length) {
-        errorDiv.textContent = "Długość hasła musi być większa niż liczba wybranych typów!";
-        errorDiv.classList.add('text-red-500');
+        showErrorPopup("Długość hasła musi być większa niż liczba wybranych typów znaków!");
         resultDiv.textContent = "wygenerowane hasło";
         return;
     }
@@ -54,8 +64,19 @@ document.getElementById('generate').addEventListener('click', () => {
 
     password = shuffleArray(password);
 
+    if (compatibility) {
+        while (
+            (useSpecial && (password[0] === '?' || password[0] === '!')) // SAP compatibility: The first character cannot be an exclamation point (!) or a question mark (?). -> https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/4a/c3efb58c352470e10000000a42189c/content.htm?no_cache=true
+            || 
+            (password.length >= 3 && password[0] === password[1] && password[1] === password[2]) // SAP compatibility: The first three characters cannot all be the same. For example AAA is not allowed. -> https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/4a/c3efb58c352470e10000000a42189c/content.htm?no_cache=true
+
+        ) {
+            password = shuffleArray(password);
+        }
+    }
+
     resultDiv.textContent = password.join('');
-    errorDiv.textContent = "";
+    infoDiv.textContent = "";
 });
 
 // Web Crypto API
@@ -78,23 +99,23 @@ function shuffleArray(array) {
 
 async function copyPassword() {
     const resultDiv = document.getElementById("result");
-    const errorDiv = document.getElementById("error");
+    const infoDiv = document.getElementById("info");
     const password = resultDiv.textContent.trim();
 
     if (!password || password === "wygenerowane hasło") {
-        errorDiv.textContent = "Brak hasła do skopiowania!";
-        errorDiv.classList.add('text-red-500');
+        infoDiv.textContent = "Brak hasła do skopiowania!";
+        infoDiv.classList.add('text-red-500');
         return;
     }
 
     try {
         await navigator.clipboard.writeText(password);
-        errorDiv.textContent = "Hasło skopiowane!";
-        errorDiv.classList.remove('text-red-500');
-        errorDiv.classList.add('text-green-500');
+        infoDiv.textContent = "Hasło skopiowane!";
+        infoDiv.classList.remove('text-red-500');
+        infoDiv.classList.add('text-green-500');
     } catch (err) {
-        errorDiv.textContent = "Błąd kopiowania!";
-        errorDiv.classList.add('text-red-500');
+        infoDiv.textContent = "Błąd kopiowania!";
+        infoDiv.classList.add('text-red-500');
     }
 }
 
