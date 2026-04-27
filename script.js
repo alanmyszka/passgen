@@ -1,122 +1,184 @@
-function showErrorPopup(message) {
-    const popup = document.getElementById('errorPopup');
-    const messageBox = document.getElementById('popupMessage');
+document.addEventListener('DOMContentLoaded', () => {
 
-    messageBox.textContent = message;
-    popup.classList.remove('hidden');
-}
+    const el = {
+        popup: document.getElementById('errorPopup'),
+        popupMessage: document.getElementById('popupMessage'),
+        closePopup: document.getElementById('closePopup'),
 
-document.getElementById('closePopup').addEventListener('click', function () {
-    document.getElementById('errorPopup').classList.add('hidden');
-});
+        generate: document.getElementById('generate'),
+        copy: document.getElementById('copy'),
 
-const lowercase = "abcdefghijklmnopqrstuvwxyz";
-const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const numbers = "0123456789";
-const special = "!@#$%&*?";
+        length: document.getElementById('length'),
+        result: document.getElementById('result'),
+        info: document.getElementById('info'),
 
-document.getElementById('generate').addEventListener('click', () => {
-    const length = parseInt(document.getElementById('length').value);
-    const useLowercase = document.getElementById('lowercase').checked;
-    const useUppercase = document.getElementById('uppercase').checked;
-    const useNumbers = document.getElementById('numbers').checked;
-    const useSpecial = document.getElementById('special').checked;
-    const compatibility = document.getElementById('compatibility').checked;
+        lowercase: document.getElementById('lowercase'),
+        uppercase: document.getElementById('uppercase'),
+        numbers: document.getElementById('numbers'),
+        special: document.getElementById('special'),
+        compatibility: document.getElementById('compatibility')
+    };
 
-    const resultDiv = document.getElementById('result');
-    const infoDiv = document.getElementById('info');
+    const DEFAULT_RESULT = "wygenerowane hasło";
 
-    let characters = "";
-    let password = [];
+    const lowercase = "abcdefghijklmnopqrstuvwxyz";
+    const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const numbers = "0123456789";
+    const special = "!@#$%&*?";
 
-    if (useLowercase) {
-        characters += lowercase;
-        password.push(getRandomChar(lowercase));
-    }
-    if (useUppercase) {
-        characters += uppercase;
-        password.push(getRandomChar(uppercase));
-    }
-    if (useNumbers) {
-        characters += numbers;
-        password.push(getRandomChar(numbers));
-    }
-    if (useSpecial) {
-        characters += special;
-        password.push(getRandomChar(special));
+    function showErrorPopup(message) {
+        el.popupMessage.textContent = message;
+        el.popup.classList.remove('hidden');
     }
 
-    if (!characters.length) {
-        showErrorPopup("Wybierz przynajmniej jeden typ znaków!");
-        resultDiv.textContent = "wygenerowane hasło";
-        return;
-    }
-    if (length < password.length) {
-        showErrorPopup("Długość hasła musi być większa niż liczba wybranych typów znaków!");
-        resultDiv.textContent = "wygenerowane hasło";
-        return;
-    }
+    el.closePopup.addEventListener('click', () => {
+        el.popup.classList.add('hidden');
+    });
 
-    const remainingLength = length - password.length;
-    for (let i = 0; i < remainingLength; i++) {
-        password.push(getRandomChar(characters));
+    function getRandomChar(set) {
+        const randomValues = new Uint32Array(1);
+        crypto.getRandomValues(randomValues);
+        return set[randomValues[0] % set.length];
     }
 
-    password = shuffleArray(password);
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const randomValues = new Uint32Array(1);
+            crypto.getRandomValues(randomValues);
+            const j = randomValues[0] % (i + 1);
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
 
-    if (compatibility) {
-        while (
-            (useSpecial && (password[0] === '?' || password[0] === '!')) // SAP compatibility: The first character cannot be an exclamation point (!) or a question mark (?). -> https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/4a/c3efb58c352470e10000000a42189c/content.htm?no_cache=true
-            ||
-            (password.length >= 3 && password[0] === password[1] && password[1] === password[2]) // SAP compatibility: The first three characters cannot all be the same. For example AAA is not allowed. -> https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/4a/c3efb58c352470e10000000a42189c/content.htm?no_cache=true
+    function updateInfo(text, type) {
+        el.info.textContent = text;
+        el.info.className = "";
 
-        ) {
-            password = shuffleArray(password);
+        if (type === "error") el.info.classList.add("text-red-500");
+        if (type === "success") el.info.classList.add("text-green-500");
+    }
+
+    function buildCharset(options) {
+        let chars = "";
+        let required = [];
+
+        if (options.lowercase) {
+            chars += lowercase;
+            required.push(getRandomChar(lowercase));
+        }
+        if (options.uppercase) {
+            chars += uppercase;
+            required.push(getRandomChar(uppercase));
+        }
+        if (options.numbers) {
+            chars += numbers;
+            required.push(getRandomChar(numbers));
+        }
+        if (options.special) {
+            chars += special;
+            required.push(getRandomChar(special));
+        }
+
+        return { chars, required };
+    }
+
+    function isInvalid(password, options) {
+        return (
+            (options.special && (password[0] === '?' || password[0] === '!')) ||
+            (password.length >= 3 &&
+                password[0] === password[1] &&
+                password[1] === password[2])
+        );
+    }
+
+    function generatePassword(options) {
+        const { chars, required } = buildCharset(options);
+
+        if (!chars.length) {
+            showErrorPopup("Wybierz przynajmniej jeden typ znaków!");
+            return null;
+        }
+
+        if (options.length < required.length) {
+            showErrorPopup("Długość hasła musi być większa niż liczba wybranych typów znaków!");
+            return null;
+        }
+
+        let password = [...required];
+
+        const remaining = options.length - password.length;
+
+        for (let i = 0; i < remaining; i++) {
+            password.push(getRandomChar(chars));
+        }
+
+        password = shuffleArray(password);
+
+        if (options.compatibility) {
+            let attempts = 0;
+
+            while (
+                attempts < 20 &&
+                isInvalid(password, options)
+            ) {
+                password = shuffleArray(password);
+                attempts++;
+            }
+        }
+
+        return password.join('');
+    }
+
+    el.generate.addEventListener('click', () => {
+
+        const options = {
+            length: parseInt(el.length.value),
+            lowercase: el.lowercase.checked,
+            uppercase: el.uppercase.checked,
+            numbers: el.numbers.checked,
+            special: el.special.checked,
+            compatibility: el.compatibility.checked
+        };
+
+        const password = generatePassword(options);
+
+        if (!password) {
+            el.result.textContent = DEFAULT_RESULT;
+            return;
+        }
+
+        el.result.textContent = password;
+        updateInfo("", "clear");
+    });
+
+    el.copy.addEventListener('click', async () => {
+        const password = el.result.textContent.trim();
+
+        if (!password || password === DEFAULT_RESULT) {
+            updateInfo("Brak hasła do skopiowania!", "error");
+            return;
+        }
+
+        try {
+            await navigator.clipboard.writeText(password);
+            updateInfo("Hasło skopiowane!", "success");
+        } catch (e) {
+            updateInfo("Błąd kopiowania!", "error");
+        }
+    });
+
+    const lengthRange = document.getElementById('lengthRange');
+
+    function syncLength(fromRange) {
+        if (fromRange) {
+            el.length.value = lengthRange.value;
+        } else {
+            lengthRange.value = el.length.value;
         }
     }
 
-    resultDiv.textContent = password.join('');
-    infoDiv.textContent = "";
+    lengthRange.addEventListener('input', () => syncLength(true));
+    el.length.addEventListener('input', () => syncLength(false));
+
 });
-
-// Web Crypto API
-function getRandomChar(set) {
-    const randomValues = new Uint32Array(1);
-    window.crypto.getRandomValues(randomValues);
-    return set[randomValues[0] % set.length];
-}
-
-// Fisher-Yates shuffle using Web Crypto API
-function shuffleArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const randomValues = new Uint32Array(1);
-        window.crypto.getRandomValues(randomValues);
-        const j = randomValues[0] % (i + 1);
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-async function copyPassword() {
-    const resultDiv = document.getElementById("result");
-    const infoDiv = document.getElementById("info");
-    const password = resultDiv.textContent.trim();
-
-    if (!password || password === "wygenerowane hasło") {
-        infoDiv.textContent = "Brak hasła do skopiowania!";
-        infoDiv.classList.add('text-red-500');
-        return;
-    }
-
-    try {
-        await navigator.clipboard.writeText(password);
-        infoDiv.textContent = "Hasło skopiowane!";
-        infoDiv.classList.remove('text-red-500');
-        infoDiv.classList.add('text-green-500');
-    } catch (err) {
-        infoDiv.textContent = "Błąd kopiowania!";
-        infoDiv.classList.add('text-red-500');
-    }
-}
-
-document.getElementById('copy').addEventListener('click', copyPassword);
