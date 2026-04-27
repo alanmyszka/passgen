@@ -67,7 +67,7 @@ document.getElementById('generate').addEventListener('click', () => {
     if (compatibility) {
         while (
             (useSpecial && (password[0] === '?' || password[0] === '!')) // SAP compatibility: The first character cannot be an exclamation point (!) or a question mark (?). -> https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/4a/c3efb58c352470e10000000a42189c/content.htm?no_cache=true
-            || 
+            ||
             (password.length >= 3 && password[0] === password[1] && password[1] === password[2]) // SAP compatibility: The first three characters cannot all be the same. For example AAA is not allowed. -> https://help.sap.com/doc/saphelp_nw75/7.5.5/en-US/4a/c3efb58c352470e10000000a42189c/content.htm?no_cache=true
 
         ) {
