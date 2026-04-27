@@ -14,7 +14,7 @@
 <body>
     <div class="card">
         <div class="title">passgen</div>
-        <div class="sub">generator haseł</div>
+        <div class="sub"><legend>client-side password generator</legend></div>
         <div id="result">wygenerowane hasło</div>
         <div class="row">
             <input type="number" id="length" value="12" min="4" max="32">
@@ -46,7 +46,8 @@
             <button id="generate">generuj</button>
             <button id="copy">kopiuj</button>
         </div>
-        <div id="info"></div>
+        <div id="toastContainer"></div>
+        <!-- <div id="info"></div> -->
     </div>
     <div id="errorPopup" class="hidden">
         <div class="popup">

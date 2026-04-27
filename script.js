@@ -149,22 +149,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         el.result.textContent = password;
-        updateInfo("", "clear");
+        // showToast("", "clear");
     });
 
     el.copy.addEventListener('click', async () => {
         const password = el.result.textContent.trim();
 
         if (!password || password === DEFAULT_RESULT) {
-            updateInfo("Brak hasła do skopiowania!", "error");
+            showToast("Brak hasła do skopiowania! Wygeneruj hasło!", "error");
             return;
         }
 
         try {
             await navigator.clipboard.writeText(password);
-            updateInfo("Hasło skopiowane!", "success");
+            showToast("Hasło skopiowane!", "success");
         } catch (e) {
-            updateInfo("Błąd kopiowania!", "error");
+            showToast("Błąd kopiowania!", "error");
         }
     });
 
@@ -203,5 +203,32 @@ document.addEventListener('DOMContentLoaded', () => {
     closeInfoPopup.addEventListener('click', () => {
         infoPopup.classList.add('hidden');
     });
+
+    const toastContainer = document.getElementById('toastContainer');
+
+    let toastTimeout = null;
+    let activeToast = null;
+
+    function showToast(message, type = "success") {
+
+        if (activeToast) {
+            activeToast.textContent = message;
+            activeToast.className = `toast ${type}`;
+
+            clearTimeout(toastTimeout);
+        } else {
+            activeToast = document.createElement('div');
+            activeToast.className = `toast ${type}`;
+            activeToast.textContent = message;
+            document.getElementById('toastContainer').appendChild(activeToast);
+        }
+
+        toastTimeout = setTimeout(() => {
+            if (activeToast) {
+                activeToast.remove();
+                activeToast = null;
+            }
+        }, 2000);
+    }
 
 });
