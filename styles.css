@@ -1,0 +1,259 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bg: #0f0f10;
+    --card: #17171a;
+    --card2: #1f1f24;
+    --border: rgba(255, 255, 255, .08);
+    --grid: rgba(255, 255, 255, .02);
+    --text: #f2f2f2;
+    --muted: #9a9aa3;
+    --accent: #6557ff;
+    --danger: #ff5b5b;
+    --success: #3ddc97;
+    --radius: 12px;
+}
+
+body {
+    font-family: 'DM Mono', monospace;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 48px 48px;
+    z-index: 0;
+}
+
+.card {
+    width: 100%;
+    max-width: 520px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+}
+
+.title {
+    /*font-family: 'Syne', sans-serif;
+            font-size: 40px;
+            margin-bottom: 6px;*/
+    font-family: 'Syne', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1.0;
+    letter-spacing: -.03em;
+    margin-bottom: 1rem;
+}
+
+.sub {
+    color: var(--muted);
+    font-size: 15px;
+    margin-bottom: 18px;
+}
+
+#result {
+    background: var(--card2);
+    padding: 14px;
+    border-radius: var(--radius);
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 18px;
+    word-break: break-all;
+    font-family: monospace;
+}
+
+.row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+input[type="number"] {
+    width: 80px;
+    padding: 10px;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--card2);
+    color: var(--text);
+}
+
+input[type="range"] {
+    flex: 1;
+    accent-color: var(--accent);
+}
+
+fieldset {
+    border: none;
+    margin: 16px 0;
+}
+
+legend {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    margin-bottom: 8px;
+    position: relative;
+}
+
+input[type="checkbox"] {
+    accent-color: var(--accent);
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+button {
+    flex: 1;
+    padding: 12px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 500;
+    transition: .15s;
+}
+
+#generate {
+    background: var(--accent);
+    color: #fff;
+}
+
+#copy {
+    background: var(--card2);
+    color: var(--text);
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+#info {
+    margin-top: 10px;
+    min-height: 18px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.text-red-500 {
+    color: var(--danger);
+}
+
+.text-green-500 {
+    color: var(--success);
+}
+
+.hidden {
+    display: none;
+}
+
+#errorPopup {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, .6);
+    backdrop-filter: blur(6px);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.popup {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 20px;
+    border-radius: var(--radius);
+    width: 280px;
+    text-align: center;
+}
+
+.popup h2 {
+    color: var(--danger);
+    margin-bottom: 10px;
+}
+
+.popup button {
+    margin-top: 14px;
+    background: var(--danger);
+    color: #fff;
+    width: 100%;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-left: 6px;
+    cursor: pointer;
+    color: var(--accent);
+}
+
+.tooltip-box {
+    position: absolute;
+    bottom: 140%;
+    left: 50%;
+    transform: translateY(-50%), translateX(-50%);
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 10px;
+    width: 400px;
+    font-size: 14px;
+    line-height: 1.4;
+    opacity: 0;
+    visibility: hidden;
+    transition: .15s;
+    z-index: 10;
+    cursor: default;
+    color: var(--text);
+}
+
+.tooltip-box b {
+    color: var(--accent);
+}
+
+.tooltip:hover .tooltip-box {
+    opacity: 1;
+    visibility: visible;
+}
+
+.tooltip a {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .tooltip-box {
+        display: none !important;
+    }
+
+    .tooltip {
+        pointer-events: none;
+    }
+}
