@@ -181,4 +181,27 @@ document.addEventListener('DOMContentLoaded', () => {
     lengthRange.addEventListener('input', () => syncLength(true));
     el.length.addEventListener('input', () => syncLength(false));
 
+    const compatTrigger = document.getElementById('compatInfoTrigger');
+    const tooltipBox = compatTrigger.querySelector('.tooltip-box');
+
+    const infoPopup = document.getElementById('infoPopup');
+    const compatContent = document.getElementById('compatContent');
+    const closeInfoPopup = document.getElementById('closeInfoPopup');
+
+    function isMobile() {
+        return window.innerWidth < 768;
+    }
+
+    compatTrigger.addEventListener('click', (e) => {
+        if (isMobile()) {
+            e.preventDefault();
+            compatContent.innerHTML = tooltipBox.innerHTML;
+            infoPopup.classList.remove('hidden');
+        }
+    });
+
+    closeInfoPopup.addEventListener('click', () => {
+        infoPopup.classList.add('hidden');
+    });
+
 });

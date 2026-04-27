@@ -28,7 +28,7 @@
             <label><input type="checkbox" id="special" checked> znaki specjalne</label>
             <label>
                 <input type="checkbox" id="compatibility" checked> tryb kompatybilności
-                <span class="tooltip">?
+                <span class="tooltip" id="compatInfoTrigger">?
                     <div class="tooltip-box">
                         <b>tryb kompatybilności obejmuje:</b><br><br>
                         > kompatybilność z systemem SAP - pierwszy znak nie może być ! ani ? <br>
@@ -55,6 +55,12 @@
             <button id="closePopup">zamknij</button>
         </div>
     </div>
+    <div id="infoPopup" class="hidden">
+        <div class="popup">
+            <div id="compatContent"></div>
+            <button id="closeInfoPopup">zamknij</button>
+        </div>
+    </div>  
     <script src="/script.js"></script>
 </body>
 

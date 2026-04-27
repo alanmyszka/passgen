@@ -248,12 +248,37 @@ button:active {
     text-decoration: underline;
 }
 
+#infoPopup {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+}
+
+#infoPopup a {
+    color: var(--accent);
+    text-decoration: underline;
+}
+
+#infoPopup b {
+    color: var(--accent);
+}
+
+#infoPopup button {
+    background-color: var(--accent);
+}
+
+@media (min-width: 768px) {
+    .tooltip:hover .tooltip-box {
+        display: block;
+    }
+}
+
 @media (max-width: 768px) {
     .tooltip-box {
         display: none !important;
-    }
-
-    .tooltip {
-        pointer-events: none;
     }
 }
