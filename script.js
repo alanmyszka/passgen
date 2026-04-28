@@ -231,4 +231,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 2000);
     }
 
+    el.length.addEventListener('input', () => {
+        const val = parseInt(el.length.value);
+        if (val < 4) el.length.value = 4;
+        if (val > 32) el.length.value = 32;
+        syncLength(false);
+    });
+
 });

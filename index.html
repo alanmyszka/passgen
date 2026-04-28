@@ -8,13 +8,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/styles.css?v=20260428">
 </head>
 
 <body>
     <div class="card">
         <div class="title">passgen</div>
-        <div class="sub"><legend>client-side password generator</legend></div>
+        <div class="sub"><span class="description">client-side password generator</span></div>
         <div id="result">wygenerowane hasło</div>
         <div class="row">
             <input type="number" id="length" value="12" min="4" max="32">
@@ -47,7 +47,6 @@
             <button id="copy">kopiuj</button>
         </div>
         <div id="toastContainer"></div>
-        <!-- <div id="info"></div> -->
     </div>
     <div id="errorPopup" class="hidden">
         <div class="popup">
@@ -62,7 +61,7 @@
             <button id="closeInfoPopup">zamknij</button>
         </div>
     </div>  
-    <script src="/script.js"></script>
+    <script src="/script.js?v=20260428"></script>
 </body>
 
 </html>
