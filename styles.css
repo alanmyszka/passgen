@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'Syne';
+    src: url('/fonts/Syne-VariableFont_wght.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'DM Mono';
+    src: url('/fonts/DMMono-Regular.woff2') format('woff2');
+}
+
 *,
 *::before,
 *::after {
@@ -47,9 +57,6 @@ body {
 }
 
 .title {
-    /*font-family: 'Syne', sans-serif;
-            font-size: 40px;
-            margin-bottom: 6px;*/
     font-family: 'Syne', sans-serif;
     font-size: 40px;
     font-weight: 800;
